@@ -55,8 +55,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 layer_state_t layer_state_set_user(layer_state_t state)
 {
-  // Auto enable scroll mode when the highest layer is 3
-  keyball_set_scroll_mode(get_highest_layer(state) == 3);
+  // Auto enable scroll mode when the highest layer is 5
+  keyball_set_scroll_mode(get_highest_layer(state) == 5);
   return state;
 }
 
@@ -70,4 +70,12 @@ void oledkit_render_info_user(void)
   keyball_oled_render_ballinfo();
   keyball_oled_render_layerinfo();
 }
+#endif
+
+#ifdef COMBO_ENABLE
+const uint16_t PROGMEM my_jl[] = {KC_J, KC_L, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(my_jl, TG(4)),
+};
 #endif
