@@ -69,7 +69,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       case HOLDEN:
         unregister_ctrl();
         break;
-      case default:
+      case RELEASED:
         break;
       }
       ctrl_alt_state = RELEASED;
