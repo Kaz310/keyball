@@ -64,10 +64,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       switch (ctrl_alt_state)
       {
       case PRESSED:
-        tap_tcrl_brc();
+        tap_alt_grave();
         break;
       case HOLDEN:
         unregister_ctrl();
+        break;
+      case default:
         break;
       }
       ctrl_alt_state = RELEASED;
