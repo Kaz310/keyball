@@ -135,6 +135,6 @@ const uint16_t PROGMEM my_pgud[] = {KC_PGUP, KC_PGDN, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(my_jl, TG(4)),
-    CONBO(my_pgud, TG(0)),
+    COMBO(my_pgud, TG(0)),
 };
 #endif
