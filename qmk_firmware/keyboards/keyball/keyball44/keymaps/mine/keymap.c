@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 enum custom_keycodes
 {
-  CTRL_LANG = SAFE_RANGE
+  MOUSE_LANG = SAFE_RANGE
 };
 
 enum key_state
@@ -39,38 +39,38 @@ void tap_mod_key(uint16_t modifier, uint16_t keycode)
   unregister_code(modifier);
 }
 
-enum key_state ctrl_lang_state = RELEASED;
+enum key_state mouse_lang_state = RELEASED;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
-  if (keycode == CTRL_LANG)
+  if (keycode == MOUSE_LANG)
   {
     if (record->event.pressed)
     {
-      ctrl_lang_state = PRESSED;
+      mouse_lang_state = PRESSED;
     }
     else
     {
-      switch (ctrl_lang_state)
+      switch (mouse_lang_state)
       {
       case PRESSED:
         tap_mod_key(KC_RALT, KC_GRV);
         break;
       case HOLDEN:
-        unregister_code(KC_RIGHT_CTRL);
+        unregister_code(MO(MOUSE_LAYER));
         break;
       case RELEASED:
         break;
       }
-      ctrl_lang_state = RELEASED;
+      mouse_lang_state = RELEASED;
     }
   }
   else
   {
-    if (ctrl_lang_state == PRESSED)
+    if (mouse_lang_state == PRESSED)
     {
-      register_code(KC_RIGHT_CTRL);
-      ctrl_lang_state = HOLDEN;
+      register_code(MO(MOUSE_LAYER));
+      mouse_lang_state = HOLDEN;
     }
   }
 
@@ -84,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_DEL   ,
     KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , S(KC_7)  ,
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_INT1  ,
-              KC_LALT,KC_LGUI,CTRL_LANG     ,LT(1,KC_SPC),LT(3,KC_LNG1),                  KC_BSPC,LT(2,KC_ENT), RCTL_T(KC_LNG2),     KC_RALT  , KC_PSCR
+              KC_LALT,KC_LGUI,MOUSE_LANG     ,LT(1,KC_SPC),LT(3,KC_LNG1),                  KC_BSPC,LT(2,KC_ENT), RCTL_T(KC_LNG2),     KC_RALT  , KC_PSCR
   ),
 
   [1] = LAYOUT_universal(
