@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 enum custom_keycodes
 {
-  CTRL_ALT = SAFE_RANGE
+  CTRL_LANG = SAFE_RANGE
 };
 
 enum key_state
@@ -32,55 +32,45 @@ enum key_state
   HOLDEN
 };
 
-void tap_alt_grave(void)
+void tap_mod_key(uint16_t modifier, uint16_t keycode)
 {
-  register_code(KC_RIGHT_ALT);
-  tap_code(KC_GRAVE);
-  unregister_code(KC_RIGHT_ALT);
+  register_code(modifier);
+  tap_code(keycode);
+  unregister_code(modifier);
 }
 
-void register_ctrl(void)
-{
-  register_code(KC_RIGHT_CTRL);
-}
-
-void unregister_ctrl(void)
-{
-  unregister_code(KC_RIGHT_CTRL);
-}
-
-enum key_state ctrl_alt_state = RELEASED;
+enum key_state ctrl_lang_state = RELEASED;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
-  if (keycode == CTRL_ALT)
+  if (keycode == CTRL_LANG)
   {
     if (record->event.pressed)
     {
-      ctrl_alt_state = PRESSED;
+      ctrl_lang_state = PRESSED;
     }
     else
     {
-      switch (ctrl_alt_state)
+      switch (ctrl_lang_state)
       {
       case PRESSED:
-        tap_alt_grave();
+        tap_mod_key(KC_RALT, KC_GRV);
         break;
       case HOLDEN:
-        unregister_ctrl();
+        unregister_code(KC_RIGHT_CTRL);
         break;
       case RELEASED:
         break;
       }
-      ctrl_alt_state = RELEASED;
+      ctrl_lang_state = RELEASED;
     }
   }
   else
   {
-    if (ctrl_alt_state == PRESSED)
+    if (ctrl_lang_state == PRESSED)
     {
-      register_ctrl();
-      ctrl_alt_state = HOLDEN;
+      register_code(KC_RIGHT_CTRL);
+      ctrl_lang_state = HOLDEN;
     }
   }
 
@@ -94,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_DEL   ,
     KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , S(KC_7)  ,
     KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_INT1  ,
-              KC_LALT,KC_LGUI,CTRL_ALT     ,LT(1,KC_SPC),LT(3,KC_LNG1),                  KC_BSPC,LT(2,KC_ENT), RCTL_T(KC_LNG2),     KC_RALT  , KC_PSCR
+              KC_LALT,KC_LGUI,CTRL_LANG     ,LT(1,KC_SPC),LT(3,KC_LNG1),                  KC_BSPC,LT(2,KC_ENT), RCTL_T(KC_LNG2),     KC_RALT  , KC_PSCR
   ),
 
   [1] = LAYOUT_universal(
@@ -141,8 +131,10 @@ void oledkit_render_info_user(void)
 
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM my_jl[] = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM my_pgud[] = {KC_PGUP, KC_PGDN, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(my_jl, TG(4)),
+    CONBO(my_pgud, TG(0)),
 };
 #endif
