@@ -130,10 +130,12 @@ void oledkit_render_info_user(void)
 #endif
 
 #ifdef COMBO_ENABLE
-const uint16_t PROGMEM my_jl[] = {KC_J, KC_L, COMBO_END};
-const uint16_t PROGMEM my_pgud[] = {KC_PGUP, KC_PGDN, COMBO_END};
+typedef const uint16_t comb_keys_t[];
+static PROGMEM comb_keys_t
+    my_jl[] = {KC_J, KC_L, COMBO_END},
+    my_pgud[] = {KC_PAGE_UP, KC_PAGE_DOWN, COMBO_END};
 
-combo_t key_combos[] = {
+combo_t key_combos[COMBO_COUNT] = {
     COMBO(my_jl, TG(4)),
     COMBO(my_pgud, TG(0)),
 };
