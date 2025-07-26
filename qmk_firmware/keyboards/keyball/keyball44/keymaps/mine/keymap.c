@@ -146,16 +146,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ARROW_MOUSE] = LAYOUT(
     KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    , KC_F6    ,      KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   , KC_F12   ,
-    _______  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , AML_TO   ,
+    _______  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , SCRL_TO  ,
     _______  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_END   ,      KC_PGDN  , KC_WH_L  , KC_WH_D  , KC_WH_R  , KC_BTN4  , KC_BTN5  ,
-               _______  , _______  , _______  , _______  , _______  ,      KC_LSFT  , KC_LCTL                        , WIN_LOCK
+               _______  , _______  , _______  , _______  , _______  ,      KC_LSFT  , KC_LCTL                        , CNG_WIN
   ),
 
   [_MOUSE] = LAYOUT(
-    XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      UNDO     , CUT      , COPY     , PASTE    , CNG_WIN  , SCRL_DVI ,
-    XXXXXXX  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , SCRL_DVD ,
+    XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      UNDO     , CUT      , COPY     , PASTE    , SCRL_DVD , SCRL_DVI ,
+    XXXXXXX  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , SCRL_TO  ,
     XXXXXXX  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_END   ,      KC_PGDN  , KC_WH_L  , KC_WH_D  , KC_WH_R  , KC_BTN4  , KC_BTN5  ,
-               XXXXXXX  , XXXXXXX  , MO_QWER  , MO_QWER  , MO_QWER  ,      KC_LSFT  , KC_LCTL                        , WIN_LOCK
+               XXXXXXX  , XXXXXXX  , MO_QWER  , MO_QWER  , MO_QWER  ,      KC_LSFT  , KC_LCTL                        , CNG_WIN
   ),
 };
 // clang-format on
