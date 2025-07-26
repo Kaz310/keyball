@@ -20,6 +20,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
+// custom keys
+#define SFT_Z SFT_T(KC_Z)
+#define SFT_GRV SFT_T(KC_GRV)
+#define SFT_1 SFT_T(KC_1)
+#define SFT_2 SFT_T(KC_2)
+#define SFT_3 SFT_T(KC_3)
+#define SFT_4 SFT_T(KC_4)
+#define SFT_5 SFT_T(KC_5)
+#define SFT_6 SFT_T(KC_6)
+#define SFT_7 SFT_T(KC_7)
+#define SFT_8 SFT_T(KC_8)
+#define SFT_9 SFT_T(KC_9)
+#define SFT_0 SFT_T(KC_0)
+#define SFT_COMM SFT_T(KC_COMM)
+#define SFT_DOT SFT_T(KC_DOT)
+#define SFT_MINS SFT_T(KC_MINS)
+#define SFT_EQL SFT_T(KC_EQL)
+#define SFT_SLSH SFT_T(KC_SLSH)
+#define SFT_BSLS SFT_T(KC_BSLS)
+#define SFT_QUOT SFT_T(KC_QUOT)
+#define SFT_SCLN SFT_T(KC_SCLN)
+#define SFT_LBRC SFT_T(KC_LBRC)
+#define SFT_RBRC SFT_T(KC_RBRC)
+#define WIN_LOCK GUI_T(KC_L)
+#define UNDO CTL_T(KC_Z)
+#define CUT CTL_T(KC_X)
+#define COPY CTL_T(KC_C)
+#define PASTE CTL_T(KC_V)
+#define CNG_WIN GUI_T(KC_TAB)
+
+enum layer_number
+{
+  _QWERTY = 0,
+  _NUM,
+  _SFT_NUM,
+  _ARROW_MOUSE,
+  _MOUSE
+};
+
 enum custom_keycodes
 {
   CTRL_LANG = SAFE_RANGE
@@ -80,32 +119,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
-  [0] = LAYOUT_universal(
-    KC_ESC   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                                        KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_DEL   ,
-    KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                                        KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , S(KC_7)  ,
-    KC_LSFT  , KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                                        KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_INT1  ,
-              KC_LALT,KC_LGUI,CTRL_LANG     ,LT(1,KC_SPC),LT(3,KC_LNG1),                  KC_BSPC,LT(2,KC_ENT), RCTL_T(KC_LNG2),     KC_RALT  , KC_PSCR
+  [_QWERTY] = LAYOUT_universal(
+    KC_ESC   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,      KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_DEL  ,
+    KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,      KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , S(KC_7) ,
+    KC_LSFT  , SFT_Z    , KC_X     , KC_C     , KC_V     , KC_B     ,      KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_SLSH  , KC_INT1 ,
+    KC_LALT  , KC_LGUI  ,   CTRL_LANG , LT(3,KC_SPC) , LT(1,KC_LNG1),      KC_BSPC  , LT(2,KC_ENT) , RCTL_T(KC_LNG2) , XXXXXXX  , XXXXXXX
   ),
 
-  [1] = LAYOUT_universal(
-    SSNP_FRE ,  KC_F1   , KC_F2    , KC_F3   , KC_F4    , KC_F5    ,                                         KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
-    SSNP_VRT ,  _______ , _______  , KC_UP   , KC_ENT   , KC_DEL   ,                                         KC_PGUP  , KC_BTN1  , KC_UP    , KC_BTN2  , KC_BTN3  , KC_F12   ,
-    SSNP_HOR ,  _______ , KC_LEFT  , KC_DOWN , KC_RGHT  , KC_BSPC  ,                                         KC_PGDN  , KC_LEFT  , KC_DOWN  , KC_RGHT  , _______  , _______  ,
-                  _______  , _______ , _______  ,         _______  , _______  ,                   _______  , _______  , _______       , _______  , _______
+  [_NUM] = LAYOUT_universal(
+    KC_GRV   , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,      KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______ ,
+    _______  , KC_COMM  , KC_DOT   , KC_MINS  , KC_EQL   , KC_SLSH  ,      KC_BSLS  , KC_QUOT  , KC_SCLN  , KC_LBRC  , KC_RBRC  , XXXXXXX ,
+    _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX ,
+    _______  , _______  ,   _______   , _______      , _______      ,      _______  , _______      , XXXXXXX         , XXXXXXX  , XXXXXXX
   ),
 
-  [2] = LAYOUT_universal(
-    _______  ,S(KC_QUOT), KC_7     , KC_8    , KC_9     , S(KC_8)  ,                                         S(KC_9)  , S(KC_1)  , S(KC_6)  , KC_LBRC  , S(KC_4)  , _______  ,
-    _______  ,S(KC_SCLN), KC_4     , KC_5    , KC_6     , KC_RBRC  ,                                         KC_NUHS  , KC_MINS  , S(KC_EQL), S(KC_3)  , KC_QUOT  , S(KC_2)  ,
-    _______  ,S(KC_MINS), KC_1     , KC_2    , KC_3     ,S(KC_RBRC),                                        S(KC_NUHS),S(KC_INT1), KC_EQL   ,S(KC_LBRC),S(KC_SLSH),S(KC_INT3),
-                  KC_0     , KC_DOT  , _______  ,         _______  , _______  ,                   KC_DEL   , _______  , _______       , _______  , _______
+  [_SFT_NUM] = LAYOUT_universal(
+    SFT_GRV  , SFT_1    , SFT_2    , SFT_3    , SFT_4    , SFT_5    ,      SFT_6    , SFT_7    , SFT_8    , SFT_9    , SFT_0    , _______ ,
+    KC_F1    , SFT_COMM , SFT_DOT  , SFT_MINS , SFT_EQL  , SFT_SLSH ,      SFT_BSLS , SFT_QUOT , SFT_SCLN , SFT_LBRC , SFT_RBRC , XXXXXXX ,
+    _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX ,
+    _______  , _______  ,   _______   , _______      , _______      ,      _______  , _______      , XXXXXXX         , XXXXXXX  , XXXXXXX
   ),
 
-  [3] = LAYOUT_universal(
-    RGB_TOG  , AML_TO   , AML_I50  , AML_D50  , _______  , _______  ,                                        RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,
-    RGB_MOD  , RGB_HUI  , RGB_SAI  , RGB_VAI  , _______  , SCRL_DVI ,                                        RGB_M_X  , RGB_M_G  , RGB_M_T  , RGB_M_TW , _______  , _______  ,
-    RGB_RMOD , RGB_HUD  , RGB_SAD  , RGB_VAD  , _______  , SCRL_DVD ,                                        CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , _______  , KBC_SAVE ,
-                  QK_BOOT  , KBC_RST  , _______  ,        _______  , _______  ,                   _______  , _______  , _______       , KBC_RST  , QK_BOOT
+  [_ARROW_MOUSE] = LAYOUT_universal(
+    KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    , KC_F6    ,      KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   , KC_F12   ,
+    _______  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , MS_BTN1  , MS_WHLU  , MS_BTN2  , MS_BTN3  , AML_TO   ,
+    _______  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_END   ,      KC_PGDN  , MS_WHLL  , MS_WHLD  , MS_WHLR  , MS_BTN4  , MS_BTN5  ,
+    _______  , _______  ,   _______   , _______      , _______      ,      KC_LSFT  , KC_LCTL      , WIN_LOCK        , XXXXXXX  , XXXXXXX
+  ),
+
+  [_MOUSE] = LAYOUT_universal(
+    XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      UNDO     , CUT      , COPY     , PASTE    , CNG_WIN  , SCRL_DVI ,
+    XXXXXXX  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , MS_BTN1  , MS_WHLU  , MS_BTN2  , MS_BTN3  , SCRL_DVD ,
+    XXXXXXX  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_END   ,      KC_PGDN  , MS_WHLL  , MS_WHLD  , MS_WHLR  , MS_BTN4  , MS_BTN5  ,
+    XXXXXXX  , XXXXXXX  , MO(_QWERTY) , MO(_QWERTY)  , MO(_QWERTY)  ,      KC_LSFT  , KC_LCTL      , WIN_LOCK        , XXXXXXX  , XXXXXXX
   ),
 };
 // clang-format on
@@ -113,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 layer_state_t layer_state_set_user(layer_state_t state)
 {
   // Auto enable scroll mode when the highest layer is 3
-  keyball_set_scroll_mode(get_highest_layer(state) == 3);
+  keyball_set_scroll_mode(get_highest_layer(state) == _ARROW_MOUSE);
   return state;
 }
 
@@ -136,7 +182,7 @@ static PROGMEM comb_keys_t
     my_pgud = {KC_PAGE_UP, KC_PAGE_DOWN, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(my_jl, TG(4)),
-    COMBO(my_pgud, TG(0)),
+    COMBO(my_jl, TG(_MOUSE)),
+    COMBO(my_pgud, TG(_QWERTY)),
 };
 #endif
