@@ -123,35 +123,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
-  [_QWERTY] = LAYOUT(
+  [_QWERTY] = LAYOUT_right_ball(
     KC_ESC   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,      KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_DEL  ,
     KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,      KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , KC_BSLS ,
     KC_LSFT  , SFT_Z    , KC_X     , KC_C     , KC_V     , KC_B     ,      KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_QUOT  , KC_SLSH ,
                KC_LALT  , KC_LGUI  , CTRL_LANG, LYR_SPC  , LYR_MINS ,      KC_BSPC  , LYR_ENT                        , KC_CAPS
   ),
 
-  [_NUM] = LAYOUT(
+  [_NUM] = LAYOUT_right_ball(
     KC_GRV   , KC_1     , KC_2     , KC_3     , KC_4     , KC_5     ,      KC_6     , KC_7     , KC_8     , KC_9     , KC_0     , _______ ,
     _______  , KC_COMM  , KC_DOT   , KC_MINS  , KC_EQL   , KC_SLSH  ,      KC_BSLS  , KC_QUOT  , KC_SCLN  , KC_LBRC  , KC_RBRC  , XXXXXXX ,
     _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX ,
                _______  , _______  , _______  , _______  , _______  ,      _______  , _______                        , XXXXXXX
   ),
 
-  [_SFT_NUM] = LAYOUT(
+  [_SFT_NUM] = LAYOUT_right_ball(
     SFT_GRV  , SFT_1    , SFT_2    , SFT_3    , SFT_4    , SFT_5    ,      SFT_6    , SFT_7    , SFT_8    , SFT_9    , SFT_0    , _______ ,
     KC_F1    , SFT_COMM , SFT_DOT  , SFT_MINS , SFT_EQL  , SFT_SLSH ,      SFT_BSLS , SFT_QUOT , SFT_SCLN , SFT_LBRC , SFT_RBRC , XXXXXXX ,
     _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX ,
                _______  , _______  , _______  , _______  , _______  ,      _______  , _______                        , XXXXXXX
   ),
 
-  [_ARROW_MOUSE] = LAYOUT(
+  [_ARROW_MOUSE] = LAYOUT_right_ball(
     KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    , KC_F6    ,      KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   , KC_F12   ,
     _______  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , SCRL_TO  ,
     _______  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_END   ,      KC_PGDN  , KC_WH_L  , KC_WH_D  , KC_WH_R  , KC_BTN4  , KC_BTN5  ,
                _______  , _______  , _______  , _______  , _______  ,      KC_LSFT  , KC_LCTL                        , CNG_WIN
   ),
 
-  [_MOUSE] = LAYOUT(
+  [_MOUSE] = LAYOUT_right_ball(
     XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      UNDO     , CUT      , COPY     , PASTE    , SCRL_DVD , SCRL_DVI ,
     XXXXXXX  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , SCRL_TO  ,
     XXXXXXX  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_END   ,      KC_PGDN  , KC_WH_L  , KC_WH_D  , KC_WH_R  , KC_BTN4  , KC_BTN5  ,
