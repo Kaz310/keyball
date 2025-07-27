@@ -118,7 +118,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #define COPY LCTL(KC_C)
 #define PASTE LCTL(KC_V)
 #define CNG_WIN LGUI(KC_TAB)
-#define MO_QWER TG(_QWERTY)
+#define MO_QWER TO(_QWERTY)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -186,7 +186,7 @@ static PROGMEM comb_keys_t
     my_pgud = {KC_PAGE_UP, KC_PAGE_DOWN, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(my_jl, TG(_MOUSE)),
-    COMBO(my_pgud, TG(_QWERTY)),
+    COMBO(my_jl, TO(_MOUSE)),
+    COMBO(my_pgud, TO(_QWERTY)),
 };
 #endif
