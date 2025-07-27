@@ -139,7 +139,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SFT_NUM] = LAYOUT_right_ball(
     SFT_GRV  , SFT_1    , SFT_2    , SFT_3    , SFT_4    , SFT_5    ,      SFT_6    , SFT_7    , SFT_8    , SFT_9    , SFT_0    , _______ ,
-    KC_F1    , SFT_COMM , SFT_DOT  , SFT_MINS , SFT_EQL  , SFT_SLSH ,      SFT_BSLS , SFT_QUOT , SFT_SCLN , SFT_LBRC , SFT_RBRC , XXXXXXX ,
+    _______  , SFT_COMM , SFT_DOT  , SFT_MINS , SFT_EQL  , SFT_SLSH ,      SFT_BSLS , SFT_QUOT , SFT_SCLN , SFT_LBRC , SFT_RBRC , XXXXXXX ,
     _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX ,
                _______  , _______  , _______  , _______  , _______  ,      _______  , _______                        , XXXXXXX
   ),
