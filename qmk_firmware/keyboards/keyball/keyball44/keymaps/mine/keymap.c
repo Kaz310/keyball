@@ -20,40 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
-// custom keys
-#define LYR_SPC LT(3, KC_SPC)
-#define LYR_MINS LT(2, KC_MINS)
-#define LYR_ENT LT(1, KC_ENT)
-#define SFT_Z SFT_T(KC_Z)
-#define SFT_GRV SFT_T(KC_GRV)
-#define SFT_1 SFT_T(KC_1)
-#define SFT_2 SFT_T(KC_2)
-#define SFT_3 SFT_T(KC_3)
-#define SFT_4 SFT_T(KC_4)
-#define SFT_5 SFT_T(KC_5)
-#define SFT_6 SFT_T(KC_6)
-#define SFT_7 SFT_T(KC_7)
-#define SFT_8 SFT_T(KC_8)
-#define SFT_9 SFT_T(KC_9)
-#define SFT_0 SFT_T(KC_0)
-#define SFT_COMM SFT_T(KC_COMM)
-#define SFT_DOT SFT_T(KC_DOT)
-#define SFT_MINS SFT_T(KC_MINS)
-#define SFT_EQL SFT_T(KC_EQL)
-#define SFT_SLSH SFT_T(KC_SLSH)
-#define SFT_BSLS SFT_T(KC_BSLS)
-#define SFT_QUOT SFT_T(KC_QUOT)
-#define SFT_SCLN SFT_T(KC_SCLN)
-#define SFT_LBRC SFT_T(KC_LBRC)
-#define SFT_RBRC SFT_T(KC_RBRC)
-#define WIN_LOCK GUI_T(KC_L)
-#define UNDO CTL_T(KC_Z)
-#define CUT CTL_T(KC_X)
-#define COPY CTL_T(KC_C)
-#define PASTE CTL_T(KC_V)
-#define CNG_WIN GUI_T(KC_TAB)
-#define MO_QWER MO(0)
-
 enum layer_number
 {
   _QWERTY = 0,
@@ -120,6 +86,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   return true;
 }
 
+// custom key codes
+#define LYR_SPC LT(_ARROW_MOUSE, KC_SPC)
+#define LYR_MINS LT(_SFT_NUM, KC_MINS)
+#define LYR_ENT LT(_NUM, KC_ENT)
+#define SFT_Z SFT_T(KC_Z)
+#define SFT_GRV SFT_T(KC_GRV)
+#define SFT_1 SFT_T(KC_1)
+#define SFT_2 SFT_T(KC_2)
+#define SFT_3 SFT_T(KC_3)
+#define SFT_4 SFT_T(KC_4)
+#define SFT_5 SFT_T(KC_5)
+#define SFT_6 SFT_T(KC_6)
+#define SFT_7 SFT_T(KC_7)
+#define SFT_8 SFT_T(KC_8)
+#define SFT_9 SFT_T(KC_9)
+#define SFT_0 SFT_T(KC_0)
+#define SFT_COMM SFT_T(KC_COMM)
+#define SFT_DOT SFT_T(KC_DOT)
+#define SFT_MINS SFT_T(KC_MINS)
+#define SFT_EQL SFT_T(KC_EQL)
+#define SFT_SLSH SFT_T(KC_SLSH)
+#define SFT_BSLS SFT_T(KC_BSLS)
+#define SFT_QUOT SFT_T(KC_QUOT)
+#define SFT_SCLN SFT_T(KC_SCLN)
+#define SFT_LBRC SFT_T(KC_LBRC)
+#define SFT_RBRC SFT_T(KC_RBRC)
+#define WIN_LOCK GUI_T(KC_L)
+#define UNDO CTL_T(KC_Z)
+#define CUT CTL_T(KC_X)
+#define COPY CTL_T(KC_C)
+#define PASTE CTL_T(KC_V)
+#define CNG_WIN GUI_T(KC_TAB)
+#define MO_QWER MO(_QWERTY)
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // keymap for default (VIA)
@@ -146,16 +146,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ARROW_MOUSE] = LAYOUT_right_ball(
     KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    , KC_F6    ,      KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   , KC_F12   ,
-    _______  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , SCRL_TO  ,
+    _______  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , CNG_WIN  ,
     _______  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_END   ,      KC_PGDN  , KC_WH_L  , KC_WH_D  , KC_WH_R  , KC_BTN4  , KC_BTN5  ,
-               _______  , _______  , _______  , _______  , _______  ,      KC_LSFT  , KC_LCTL                        , CNG_WIN
+               _______  , _______  , _______  , _______  , _______  ,      KC_LSFT  , KC_LCTL                        , SCRL_TO
   ),
 
   [_MOUSE] = LAYOUT_right_ball(
     XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      UNDO     , CUT      , COPY     , PASTE    , SCRL_DVD , SCRL_DVI ,
-    XXXXXXX  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , SCRL_TO  ,
+    XXXXXXX  , XXXXXXX  , XXXXXXX  , KC_UP    , XXXXXXX  , KC_HOME  ,      KC_PGUP  , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , CNG_WIN  ,
     XXXXXXX  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_END   ,      KC_PGDN  , KC_WH_L  , KC_WH_D  , KC_WH_R  , KC_BTN4  , KC_BTN5  ,
-               XXXXXXX  , XXXXXXX  , MO_QWER  , MO_QWER  , MO_QWER  ,      KC_LSFT  , KC_LCTL                        , CNG_WIN
+               XXXXXXX  , XXXXXXX  , MO_QWER  , MO_QWER  , MO_QWER  ,      KC_LSFT  , KC_LCTL                        , WIN_LOCK
   ),
 };
 // clang-format on
