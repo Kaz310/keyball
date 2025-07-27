@@ -34,19 +34,19 @@ enum custom_keycodes
   CTRL_LANG = SAFE_RANGE
 };
 
-enum key_state
-{
-  RELEASED,
-  PRESSED,
-  HOLDEN
-};
-
 void tap_mod_key(uint16_t modifier, uint16_t keycode)
 {
   register_code(modifier);
   tap_code(keycode);
   unregister_code(modifier);
 }
+
+enum key_state
+{
+  RELEASED,
+  PRESSED,
+  HOLDEN
+};
 
 enum key_state ctrl_lang_state = RELEASED;
 
