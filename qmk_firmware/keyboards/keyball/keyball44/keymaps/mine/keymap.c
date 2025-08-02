@@ -86,8 +86,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 }
 
 // custom key codes
-#define LYR_SPC LT(_ARROW_MOUSE, KC_SPC)
-#define LYR_MINS LT(_SFT_NUM, KC_MINS)
+#define LYR_SPC LT(_SIGN, KC_SPC)
+#define LYR_MINS LT(_ARROW_MOUSE, KC_MINS)
 #define LYR_ENT LT(_NUM, KC_ENT)
 #define SFT_BS LSFT(KC_BSPC)
 #define SFT_Z LSFT(KC_Z)
