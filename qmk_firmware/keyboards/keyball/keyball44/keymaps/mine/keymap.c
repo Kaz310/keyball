@@ -105,101 +105,49 @@ enum key_state
   _HOLDEN
 };
 
-void tap_or_modifier(keyrecord_t *record, enum key_state state, uint16_t tap_modifier, uint16_t keycode, uint16_t modifier)
-{
-  if (record->event.pressed)
-  {
-    state = _PRESSED;
-  }
-  else
-  {
-    switch (state)
-    {
-    case _PRESSED:
-      register_code(tap_modifier);
-      tap_code(keycode);
-      unregister_code(tap_modifier);
-      break;
-    case _HOLDEN:
-      unregister_code(modifier);
-      break;
-    case _RELEASED:
-      break;
-    }
-    state = _RELEASED;
-  }
-}
-
-void register_key_state(enum key_state state, uint16_t modifier)
-{
-  register_code(modifier);
-  state = _HOLDEN;
-}
-
-void tap_or_layer(keyrecord_t *record, bool is_tapped, enum layer_number layer, uint16_t keycode)
-{
-  if (record->event.pressed)
-  {
-    layer_on(layer);
-  }
-  else
-  {
-    layer_off(layer);
-    if (is_tapped)
-    {
-      tap_code(keycode);
-    }
-  }
-}
-
-#define PROCESS_OVERRIDE_BEHAVIOR (false)
-#define PROCESS_USUAL_BEHAVIOR (true)
-
-static uint16_t mem_keycode;
 enum key_state ctrl_lang_state = _RELEASED;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
-  uint16_t prev_keycode = mem_keycode;
-  bool is_tapped = ((!record->event.pressed) && (keycode == prev_keycode));
-  mem_keycode = keycode;
-
   switch (keycode)
   {
   case CTRL_LANG:
   {
-    tap_or_modifier(record, ctrl_lang_state, KC_RALT, KC_GRV, KC_RCTL);
-  }
-  break;
-  case LYR_SPC:
-  {
-    tap_or_layer(record, is_tapped, _SIGN, keycode);
-    return PROCESS_OVERRIDE_BEHAVIOR;
-  }
-  break;
-  case LYR_MINS:
-  {
-    tap_or_layer(record, is_tapped, _ARROW_MOUSE, keycode);
-    return PROCESS_OVERRIDE_BEHAVIOR;
-  }
-  break;
-  case LYR_ENT:
-  {
-    tap_or_layer(record, is_tapped, _NUM, keycode);
-    return PROCESS_OVERRIDE_BEHAVIOR;
+    if (record->event.pressed)
+    {
+      ctrl_lang_state = _PRESSED;
+    }
+    else
+    {
+      switch (state)
+      {
+      case _PRESSED:
+        register_code(KC_RALT);
+        tap_code(KC_GRV);
+        unregister_code(KC_RALT);
+        break;
+      case _HOLDEN:
+        unregister_code(KC_RCTL);
+        break;
+      case _RELEASED:
+        break;
+      }
+      ctrl_lang_state = _RELEASED;
+    }
   }
   break;
   default:
   {
     if (ctrl_lang_state == _PRESSED)
     {
-      register_key_state(ctrl_lang_state, KC_RCTL);
+      register_code(KC_RCTL);
+      ctrl_lang_state = _HOLDEN;
     }
   }
   break;
   }
 
-  return PROCESS_USUAL_BEHAVIOR;
+  return true;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state)
