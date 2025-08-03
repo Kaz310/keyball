@@ -119,7 +119,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     }
     else
     {
-      switch (state)
+      switch (ctrl_lang_state)
       {
       case _PRESSED:
         register_code(KC_RALT);
