@@ -168,7 +168,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   {
   case CTRL_LANG:
   {
-    tap_or_modifier(record, ctrl_lang_state, KC_RALT, KC_GRV, KC_RCTR);
+    tap_or_modifier(record, ctrl_lang_state, KC_RALT, KC_GRV, KC_RCTL);
   }
   break;
   case LYR_SPC:
@@ -193,7 +193,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   {
     if (ctrl_lang_state == _PRESSED)
     {
-      register_key_state(ctrl_lang_state, _HOLDEN);
+      register_key_state(ctrl_lang_state, KC_RCTL);
     }
   }
   break;
