@@ -30,67 +30,14 @@ enum layer_number
 
 enum custom_keycodes
 {
-  CTRL_LANG = SAFE_RANGE
+  CTRL_LANG = KEYBALL_SAFE_RANGE
 };
 
-void tap_mod_key(uint16_t modifier, uint16_t keycode)
-{
-  register_code(modifier);
-  tap_code(keycode);
-  unregister_code(modifier);
-}
-
-enum key_state
-{
-  RELEASED,
-  PRESSED,
-  HOLDEN
-};
-
-enum key_state ctrl_lang_state = RELEASED;
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record)
-{
-  if (keycode == CTRL_LANG)
-  {
-    if (record->event.pressed)
-    {
-      ctrl_lang_state = PRESSED;
-    }
-    else
-    {
-      switch (ctrl_lang_state)
-      {
-      case PRESSED:
-        tap_mod_key(KC_RALT, KC_GRV);
-        break;
-      case HOLDEN:
-        unregister_code(KC_RCTL);
-        break;
-      case RELEASED:
-        break;
-      }
-      ctrl_lang_state = RELEASED;
-    }
-  }
-  else
-  {
-    if (ctrl_lang_state == PRESSED)
-    {
-      register_code(KC_RCTL);
-      ctrl_lang_state = HOLDEN;
-    }
-  }
-
-  return true;
-}
-
-// custom key codes
 #define LYR_SPC LT(_SIGN, KC_SPC)
 #define LYR_MINS LT(_ARROW_MOUSE, KC_MINS)
 #define LYR_ENT LT(_NUM, KC_ENT)
-#define SFT_BS SFT_T(KC_BSPC)
-#define SFT_Z SFT_T(KC_Z)
+#define SFT_BS MT(MOD_LSFT, KC_BSPC)
+#define SFT_Z MT(MOD_LSFT, KC_Z)
 #define TILDE LSFT(KC_GRV)
 #define EXCLAM LSFT(KC_1)
 #define AT LSFT(KC_2)
@@ -121,7 +68,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  // keymap for default (VIA)
   [_QWERTY] = LAYOUT_right_ball(
     KC_ESC   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,      KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_DEL   ,
     KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,      KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , KC_BSLS  ,
@@ -130,9 +76,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NUM] = LAYOUT_right_ball(
-    XXXXXXX  , XXXXXXX  , KC_7     , KC_8     , KC_9     , COLON    ,      XXXXXXX  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_DEL   ,
-    PLUS     , KC_MINS  , KC_4     , KC_5     , KC_6     , KC_COMM  ,      XXXXXXX  , KC_F5    , KC_F6    , KC_F7    , KC_F8    , XXXXXXX  ,
-    STAR     , KC_SLSH  , KC_1     , KC_2     , KC_3     , RANGBRC  ,      XXXXXXX  , KC_F9    , KC_F10   , KC_F11   , KC_F12   , XXXXXXX  ,
+    XXXXXXX  , XXXXXXX  , KC_7     , KC_8     , KC_9     , COLON    ,      KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    , KC_DEL   ,
+    PLUS     , KC_MINS  , KC_4     , KC_5     , KC_6     , KC_COMM  ,      KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , XXXXXXX  ,
+    STAR     , KC_SLSH  , KC_1     , KC_2     , KC_3     , KC_DOT   ,      XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,
                KC_0     , KC_EQL   , _______  , _______  , _______  ,      _______  , _______                        , KC_PSCR
   ),
 
@@ -152,9 +98,113 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+enum key_state
+{
+  _RELEASED,
+  _PRESSED,
+  _HOLDEN
+};
+
+void tap_or_modifier(keyrecord_t *record, enum key_state state, uint16_t tap_modifier, uint16_t keycode, uint16_t modifier)
+{
+  if (record->event.pressed)
+  {
+    state = _PRESSED;
+  }
+  else
+  {
+    switch (state)
+    {
+    case _PRESSED:
+      register_code(tap_modifier);
+      tap_code(keycode);
+      unregister_code(tap_modifier);
+      break;
+    case _HOLDEN:
+      unregister_code(modifier);
+      break;
+    case _RELEASED:
+      break;
+    }
+    state = _RELEASED;
+  }
+}
+
+void register_key_state(enum key_state state, uint16_t modifier)
+{
+  register_code(modifier);
+  state = _HOLDEN;
+}
+
+void tap_or_layer(keyrecord_t *record, bool is_tapped, enum layer_number layer, uint16_t keycode)
+{
+  if (record->event.pressed)
+  {
+    layer_on(layer);
+  }
+  else
+  {
+    layer_off(layer);
+    if (is_tapped)
+    {
+      tap_code(keycode);
+    }
+  }
+}
+
+#define PROCESS_OVERRIDE_BEHAVIOR (false)
+#define PROCESS_USUAL_BEHAVIOR (true)
+
+static uint16_t mem_keycode;
+enum key_state ctrl_lang_state = _RELEASED;
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
+{
+  uint16_t prev_keycode = mem_keycode;
+  bool is_tapped = ((!record->event.pressed) && (keycode == prev_keycode));
+  mem_keycode = keycode;
+
+  switch (keycode)
+  {
+  case CTRL_LANG:
+  {
+    tap_or_modifier(record, ctrl_lang_state, KC_RALT, KC_GRV, KC_RCTR);
+  }
+  break;
+  case LYR_SPC:
+  {
+    tap_or_layer(record, is_tapped, _SIGN, keycode);
+    return PROCESS_OVERRIDE_BEHAVIOR;
+  }
+  break;
+  case LYR_MINS:
+  {
+    tap_or_layer(record, is_tapped, _ARROW_MOUSE, keycode);
+    return PROCESS_OVERRIDE_BEHAVIOR;
+  }
+  break;
+  case LYR_ENT:
+  {
+    tap_or_layer(record, is_tapped, _NUM, keycode);
+    return PROCESS_OVERRIDE_BEHAVIOR;
+  }
+  break;
+  default:
+  {
+    if (ctrl_lang_state == _PRESSED)
+    {
+      register_key_state(ctrl_lang_state, _HOLDEN);
+    }
+  }
+  break;
+  }
+
+  return PROCESS_USUAL_BEHAVIOR;
+}
+
 layer_state_t layer_state_set_user(layer_state_t state)
 {
-  // Auto enable scroll mode when the highest layer is 3
+  // Auto enable scroll mode when the highest layer is 10
   keyball_set_scroll_mode(get_highest_layer(state) == 10);
   return state;
 }
@@ -174,11 +224,29 @@ void oledkit_render_info_user(void)
 #ifdef COMBO_ENABLE
 typedef const uint16_t comb_keys_t[];
 static PROGMEM comb_keys_t
-    my_jl = {KC_J, KC_L, COMBO_END},
-    my_pgud = {KC_PAGE_UP, KC_PAGE_DOWN, COMBO_END};
+    comb_keys_TO_MOUSE = {KC_J, KC_L, COMBO_END},
+    comb_keys_TO_QWERTY = {KC_PAGE_UP, KC_PAGE_DOWN, COMBO_END},
+    comb_keys_F11 = {KC_F10, KC_F1, COMBO_END},
+    comb_keys_F12 = {KC_F10, KC_F2, COMBO_END},
+    comb_keys_F13 = {KC_F10, KC_F3, COMBO_END},
+    comb_keys_F14 = {KC_F10, KC_F4, COMBO_END},
+    comb_keys_F15 = {KC_F10, KC_F5, COMBO_END},
+    comb_keys_F16 = {KC_F10, KC_F6, COMBO_END},
+    comb_keys_F17 = {KC_F10, KC_F7, COMBO_END},
+    comb_keys_F18 = {KC_F10, KC_F8, COMBO_END},
+    comb_keys_F19 = {KC_F10, KC_F9, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(my_jl, TO(_ARROW_MOUSE)),
-    COMBO(my_pgud, TO(_QWERTY)),
+    COMBO(comb_keys_TO_MOUSE, TO(_ARROW_MOUSE)),
+    COMBO(comb_keys_TO_QWERTY, TO(_QWERTY)),
+    COMBO(comb_keys_F11, KC_F11),
+    COMBO(comb_keys_F12, KC_F12),
+    COMBO(comb_keys_F13, KC_F13),
+    COMBO(comb_keys_F14, KC_F14),
+    COMBO(comb_keys_F15, KC_F15),
+    COMBO(comb_keys_F16, KC_F16),
+    COMBO(comb_keys_F17, KC_F17),
+    COMBO(comb_keys_F18, KC_F18),
+    COMBO(comb_keys_F19, KC_F19),
 };
 #endif
