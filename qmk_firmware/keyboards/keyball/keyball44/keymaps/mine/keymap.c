@@ -30,12 +30,12 @@ enum layer_number
 
 enum custom_keycodes
 {
-  CTRL_LANG = KEYBALL_SAFE_RANGE
+  NUM_LANG = KEYBALL_SAFE_RANGE
 };
 
-#define LYR_SPC LT(_SIGN, KC_SPC)
-#define LYR_MINS LT(_ARROW_MOUSE, KC_MINS)
-#define LYR_ENT LT(_NUM, KC_ENT)
+#define SIGN_SPC LT(_SIGN, KC_SPC)
+#define MOUSE_MINS LT(_ARROW_MOUSE, KC_MINS)
+#define CTL_ENT MT(MOD_LCTL, KC_ENT)
 #define SFT_BS MT(MOD_LSFT, KC_BSPC)
 #define SFT_Z MT(MOD_LSFT, KC_Z)
 #define TILDE LSFT(KC_GRV)
@@ -69,31 +69,31 @@ enum custom_keycodes
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_right_ball(
-    KC_ESC   , KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,      KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     , KC_DEL   ,
-    KC_TAB   , KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,      KC_H     , KC_J     , KC_K     , KC_L     , KC_SCLN  , KC_BSLS  ,
-    KC_LSFT  , SFT_Z    , KC_X     , KC_C     , KC_V     , KC_B     ,      KC_N     , KC_M     , KC_COMM  , KC_DOT   , KC_QUOT  , KC_SLSH  ,
-               KC_LALT  , KC_LGUI  , CTRL_LANG, LYR_SPC  , LYR_MINS ,      SFT_BS   , LYR_ENT                        , KC_CAPS
+    KC_ESC    , KC_Q      , KC_W      , KC_E      , KC_R      , KC_T      ,      KC_Y      , KC_U      , KC_I      , KC_O      , KC_P      , KC_DEL    ,
+    KC_TAB    , KC_A      , KC_S    - , KC_D      , KC_F      , KC_G      ,      KC_H      , KC_J      , KC_K      , KC_L      , KC_SCLN   , KC_BSLS   ,
+    KC_LSFT   , SFT_Z     , KC_X      , KC_C      , KC_V      , KC_B      ,      KC_N      , KC_M      , KC_COMM   , KC_DOT    , KC_QUOT   , KC_SLSH   ,
+                KC_LALT   , KC_LGUI   , NUM_LANG  , SIGN_SPC  , MOUSE_MINS,      SFT_BS    , CTL_ENT                           , KC_CAPS
   ),
 
   [_NUM] = LAYOUT_right_ball(
-    XXXXXXX  , XXXXXXX  , KC_7     , KC_8     , KC_9     , COLON    ,      KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    , KC_DEL   ,
-    PLUS     , KC_MINS  , KC_4     , KC_5     , KC_6     , KC_COMM  ,      KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , XXXXXXX  ,
-    STAR     , KC_SLSH  , KC_1     , KC_2     , KC_3     , KC_DOT   ,      XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,
-               KC_0     , KC_EQL   , _______  , _______  , _______  ,      _______  , _______                        , KC_PSCR
+    XXXXXXX   , XXXXXXX   , KC_7      , KC_8      , KC_9      , COLON     ,      KC_F1     , KC_F2     , KC_F3     , KC_F4     , KC_F5     , KC_DEL    ,
+    PLUS      , KC_MINS   , KC_4      , KC_5      , KC_6      , KC_COMM   ,      KC_F6     , KC_F7     , KC_F8     , KC_F9     , KC_F10    , XXXXXXX   ,
+    STAR      , KC_SLSH   , KC_1      , KC_2      , KC_3      , KC_DOT    ,      XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   ,
+                KC_0      , KC_EQL    , _______   , _______   , _______   ,      _______   , _______                           , KC_PSCR
   ),
 
   [_SIGN] = LAYOUT_right_ball(
-    KC_GRV   , EXCLAM   , AT       , HASH     , DOLLAR   , PERCENT  ,      HAT      , AND      , STAR     , LPAREN   , RPAREN   , KC_DEL   ,
-    TILDE    , KC_COMM  , KC_DOT   , KC_MINS  , KC_EQL   , KC_SLSH  ,      KC_BSLS  , KC_QUOT  , KC_SCLN  , KC_LBRC  , KC_RBRC  , XXXXXXX  ,
-    _______  , LANGBRC  , RANGBRC  , UNDRSCR  , PLUS     , QUEST    ,      PIPE     , DQUOT    , COLON    , LCRLYBRC , RCRLYBRC , XXXXXXX  ,
-               _______  , _______  , _______  , _______  , _______  ,      _______  , _______                        , KC_PSCR
+    KC_GRV    , EXCLAM    , AT        , HASH      , DOLLAR    , PERCENT   ,      HAT       , AND       , STAR      , LPAREN    , RPAREN    , KC_DEL    ,
+    TILDE     , KC_COMM   , KC_DOT    , KC_MINS   , KC_EQL    , KC_SLSH   ,      KC_BSLS   , KC_QUOT   , KC_SCLN   , KC_LBRC   , KC_RBRC   , XXXXXXX   ,
+    _______   , LANGBRC   , RANGBRC   , UNDRSCR   , PLUS      , QUEST     ,      PIPE      , DQUOT     , COLON     , LCRLYBRC  , RCRLYBRC  , XXXXXXX   ,
+                _______   , _______   , _______   , _______   , _______   ,      _______   , _______                           , KC_PSCR
   ),
 
   [_ARROW_MOUSE] = LAYOUT_right_ball(
-    _______  , XXXXXXX  , KC_HOME  , KC_UP    , KC_END   , KC_PGUP  ,      UNDO     , CUT      , COPY     , PASTE    , KC_INS   , SCRL_TO  ,
-    _______  , XXXXXXX  , KC_LEFT  , KC_DOWN  , KC_RGHT  , KC_PGDN  ,      SCRL_DVI , KC_BTN1  , KC_WH_U  , KC_BTN2  , KC_BTN3  , CNG_WIN  ,
-    _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      SCRL_DVD , KC_WH_L  , KC_WH_D  , KC_WH_R  , KC_BTN4  , KC_BTN5  ,
-               _______  , _______  , _______  , _______  , _______  ,      KC_LSFT  , KC_LCTL                        , TO_QWER
+    _______   , XXXXXXX   , KC_HOME   , KC_UP     , KC_END    , KC_PGUP   ,      UNDO      , CUT       , COPY      , PASTE     , KC_INS    , SCRL_TO   ,
+    _______   , XXXXXXX   , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_PGDN   ,      SCRL_DVI  , KC_BTN1   , KC_WH_U   , KC_BTN2   , KC_BTN3   , CNG_WIN   ,
+    _______   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   ,      SCRL_DVD  , KC_WH_L   , KC_WH_D   , KC_WH_R   , KC_BTN4   , KC_BTN5   ,
+                _______   , _______   , _______   , _______   , _______   ,      KC_LSFT   , KC_LCTL                           , TO_QWER
   ),
 };
 // clang-format on
@@ -105,21 +105,21 @@ enum key_state
   _HOLDEN
 };
 
-enum key_state ctrl_lang_state = _RELEASED;
+enum key_state num_lang_state = _RELEASED;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode)
   {
-  case CTRL_LANG:
+  case NUM_LANG:
   {
     if (record->event.pressed)
     {
-      ctrl_lang_state = _PRESSED;
+      num_lang_state = _PRESSED;
     }
     else
     {
-      switch (ctrl_lang_state)
+      switch (num_lang_state)
       {
       case _PRESSED:
         register_code(KC_RALT);
@@ -127,21 +127,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         unregister_code(KC_RALT);
         break;
       case _HOLDEN:
-        unregister_code(KC_RCTL);
+        layer_off(_NUM);
         break;
       case _RELEASED:
         break;
       }
-      ctrl_lang_state = _RELEASED;
+      num_lang_state = _RELEASED;
     }
   }
   break;
   default:
   {
-    if (ctrl_lang_state == _PRESSED)
+    if (num_lang_state == _PRESSED)
     {
-      register_code(KC_RCTL);
-      ctrl_lang_state = _HOLDEN;
+      layer_on(_NUM);
+      num_lang_state = _HOLDEN;
     }
   }
   break;
@@ -173,7 +173,6 @@ void oledkit_render_info_user(void)
 typedef const uint16_t comb_keys_t[];
 static PROGMEM comb_keys_t
     comb_keys_TO_MOUSE = {KC_J, KC_L, COMBO_END},
-    comb_keys_TO_QWERTY = {KC_PAGE_UP, KC_PAGE_DOWN, COMBO_END},
     comb_keys_F11 = {KC_F10, KC_F1, COMBO_END},
     comb_keys_F12 = {KC_F10, KC_F2, COMBO_END},
     comb_keys_F13 = {KC_F10, KC_F3, COMBO_END},
@@ -186,7 +185,6 @@ static PROGMEM comb_keys_t
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(comb_keys_TO_MOUSE, TO(_ARROW_MOUSE)),
-    COMBO(comb_keys_TO_QWERTY, TO(_QWERTY)),
     COMBO(comb_keys_F11, KC_F11),
     COMBO(comb_keys_F12, KC_F12),
     COMBO(comb_keys_F13, KC_F13),
