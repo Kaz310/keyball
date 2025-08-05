@@ -30,12 +30,12 @@ enum layer_number
 
 enum custom_keycodes
 {
-  NUM_LANG = KEYBALL_SAFE_RANGE
+  CTL_LANG = KEYBALL_SAFE_RANGE
 };
 
 #define SIGN_SPC LT(_SIGN, KC_SPC)
 #define MOUSE_MINS LT(_ARROW_MOUSE, KC_MINS)
-#define CTL_ENT MT(MOD_LCTL, KC_ENT)
+#define NUM_ENT LT(_NUM, KC_ENT)
 #define SFT_BS MT(MOD_LSFT, KC_BSPC)
 #define SFT_Z MT(MOD_LSFT, KC_Z)
 #define TILDE LSFT(KC_GRV)
@@ -72,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC    , KC_Q      , KC_W      , KC_E      , KC_R      , KC_T      ,      KC_Y      , KC_U      , KC_I      , KC_O      , KC_P      , KC_DEL    ,
     KC_TAB    , KC_A      , KC_S      , KC_D      , KC_F      , KC_G      ,      KC_H      , KC_J      , KC_K      , KC_L      , KC_SCLN   , KC_BSLS   ,
     KC_LSFT   , SFT_Z     , KC_X      , KC_C      , KC_V      , KC_B      ,      KC_N      , KC_M      , KC_COMM   , KC_DOT    , KC_QUOT   , KC_SLSH   ,
-                KC_LALT   , KC_LGUI   , NUM_LANG  , SIGN_SPC  , MOUSE_MINS,      SFT_BS    , CTL_ENT                           , KC_CAPS
+                KC_LALT   , KC_LGUI   , CTL_LANG  , SIGN_SPC  , MOUSE_MINS,      SFT_BS    , NUM_ENT                           , KC_CAPS
   ),
 
   [_NUM] = LAYOUT_right_ball(
@@ -111,7 +111,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode)
   {
-  case NUM_LANG:
+  case CTL_LANG:
   {
     if (record->event.pressed)
     {
@@ -127,7 +127,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
         unregister_code(KC_RALT);
         break;
       case _HOLDEN:
-        layer_off(_NUM);
+        unregister_code(KC_LCTL);
         break;
       case _RELEASED:
         break;
@@ -140,7 +140,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   {
     if (num_lang_state == _PRESSED)
     {
-      layer_on(_NUM);
+      register_code(KC_LCTL);
       num_lang_state = _HOLDEN;
     }
   }
