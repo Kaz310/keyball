@@ -64,6 +64,9 @@ enum custom_keycodes
 #define COPY LCTL(KC_C)
 #define PASTE LCTL(KC_V)
 #define CNG_WIN LGUI(KC_TAB)
+#define PREV_PG LCTL(KC_TAB)
+#define BACK_PG LSFT(LCTL(KC_TAB))
+#define SFTED_TAB LSFT(KC_TAB)
 #define TO_QWER TO(_QWERTY)
 
 // clang-format off
@@ -76,9 +79,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_NUM] = LAYOUT_right_ball(
-    _______   , KC_1      , KC_2      , KC_3      , KC_4      , KC_5      ,      KC_6      , KC_7      , KC_8      , KC_9      , COLON     , KC_DEL    ,
-    _______   , KC_F1     , KC_F2     , KC_F3     , KC_F4     , KC_F5     ,      XXXXXXX   , KC_4      , KC_5      , KC_6      , KC_COMM   , XXXXXXX   ,
-    _______   , KC_F6     , KC_F7     , KC_F8     , KC_F9     , KC_F10    ,      KC_0      , KC_1      , KC_2      , KC_3      , KC_DOT    , XXXXXXX   ,
+    _______   , KC_P1     , KC_P2     , KC_P3     , KC_P4     , KC_P5     ,      KC_P6     , KC_P7     , KC_P8     , KC_P9     , KC_P0     , KC_DEL    ,
+    _______   , KC_F1     , KC_F2     , KC_F3     , KC_F4     , KC_F5     ,      COLON     , KC_P4     , KC_P5     , KC_P6     , KC_COMM   , XXXXXXX   ,
+    _______   , KC_F6     , KC_F7     , KC_F8     , KC_F9     , KC_F10    ,      KC_P0     , KC_P1     , KC_P2     , KC_P3     , KC_DOT    , XXXXXXX   ,
                 _______   , _______   , _______   , _______   , _______   ,      _______   , _______                           , XXXXXXX
   ),
 
@@ -92,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ARROW_MOUSE] = LAYOUT_right_ball(
     _______   , XXXXXXX   , KC_HOME   , KC_UP     , KC_END    , KC_PGUP   ,      UNDO      , CUT       , COPY      , PASTE     , KC_INS    , SCRL_TO   ,
     _______   , XXXXXXX   , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_PGDN   ,      SCRL_DVI  , KC_BTN1   , KC_WH_U   , KC_BTN2   , KC_BTN3   , CNG_WIN   ,
-    _______   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   ,      SCRL_DVD  , KC_WH_L   , KC_WH_D   , KC_WH_R   , KC_BTN4   , KC_BTN5   ,
+    _______   , XXXXXXX   , SFTED_TAB , KC_TAB    , BACK_PG   , PREV_PG   ,      SCRL_DVD  , KC_WH_L   , KC_WH_D   , KC_WH_R   , KC_BTN4   , KC_BTN5   ,
                 _______   , _______   , _______   , _______   , _______   ,      KC_LSFT   , KC_LCTL                           , TO_QWER
   ),
 };
