@@ -33,6 +33,8 @@ enum custom_keycodes
   CTL_LANG = KEYBALL_SAFE_RANGE
 };
 
+#define CTL_LNG_EN MT(MOD_LCTL, KC_LNG2)
+#define CTL_LNG_JP MT(MOD_LCTL, KC_LNG1)
 #define SIGN_SPC LT(_SIGN, KC_SPC)
 #define MOUSE_MINS LT(_ARROW_MOUSE, KC_MINS)
 #define NUM_ENT LT(_NUM, KC_ENT)
@@ -75,14 +77,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC    , KC_Q      , KC_W      , KC_E      , KC_R      , KC_T      ,      KC_Y      , KC_U      , KC_I      , KC_O      , KC_P      , KC_DEL    ,
     KC_TAB    , KC_A      , KC_S      , KC_D      , KC_F      , KC_G      ,      KC_H      , KC_J      , KC_K      , KC_L      , KC_SCLN   , KC_BSLS   ,
     KC_LSFT   , SFT_Z     , KC_X      , KC_C      , KC_V      , KC_B      ,      KC_N      , KC_M      , KC_COMM   , KC_DOT    , KC_QUOT   , KC_SLSH   ,
-                KC_LALT   , KC_LGUI   , CTL_LANG  , SIGN_SPC  , MOUSE_MINS,      SFT_BS    , NUM_ENT                           , KC_CAPS
+                KC_LALT   , KC_LGUI   , CTL_LNG_EN, SIGN_SPC  , MOUSE_MINS,      SFT_BS    , NUM_ENT                           , KC_CAPS
   ),
 
   [_NUM] = LAYOUT_right_ball(
     _______   , KC_P1     , KC_P2     , KC_P3     , KC_P4     , KC_P5     ,      KC_P6     , KC_P7     , KC_P8     , KC_P9     , KC_P0     , KC_DEL    ,
     _______   , KC_F1     , KC_F2     , KC_F3     , KC_F4     , KC_F5     ,      COLON     , KC_P4     , KC_P5     , KC_P6     , KC_COMM   , XXXXXXX   ,
     _______   , KC_F6     , KC_F7     , KC_F8     , KC_F9     , KC_F10    ,      KC_P0     , KC_P1     , KC_P2     , KC_P3     , KC_DOT    , XXXXXXX   ,
-                _______   , _______   , _______   , _______   , _______   ,      _______   , _______                           , XXXXXXX
+                _______   , _______   , CTL_LNG_JP, _______   , _______   ,      _______   , _______                           , XXXXXXX
   ),
 
   [_SIGN] = LAYOUT_right_ball(
@@ -156,7 +158,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 layer_state_t layer_state_set_user(layer_state_t state)
 {
   // Auto enable scroll mode when the highest layer is 10
-  keyball_set_scroll_mode(get_highest_layer(state) == 10);
+  keyball_set_scroll_mode(get_highest_layer(state) == _SIGN);
   return state;
 }
 
