@@ -20,6 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+/**************************************************************
+ * Define constants for RGB Lights.
+ **************************************************************/
 #ifdef RGBLIGHT_ENABLE
 // #    define RGBLIGHT_EFFECT_BREATHING
 // #    define RGBLIGHT_EFFECT_RAINBOW_MOOD
@@ -33,11 +36,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #    define RGBLIGHT_EFFECT_TWINKLE
 #endif
 
+/**************************************************************
+ * Define constants for key tap.
+ **************************************************************/
 #define TAP_CODE_DELAY 5
 
-#define DYNAMIC_KEYMAP_LAYER_COUNT 4
-
-#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
-#define AUTO_MOUSE_DEFAULT_LAYER 4
-
+/**************************************************************
+ * Define constants for customization of keymaps.
+ **************************************************************/
+#define DYNAMIC_KEYMAP_LAYER_COUNT 5
 #define COMBO_COUNT 10
+
+/**************************************************************
+ * Define constants for mouse.
+ **************************************************************/
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+#define AUTO_MOUSE_DEFAULT_LAYER 5
