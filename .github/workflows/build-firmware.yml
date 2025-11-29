@@ -34,8 +34,9 @@ jobs:
 
       - name: Install missing python modules
         run: |
-          sudo apt install pipx
-          pipx install -r __qmk__/requirements.txt
+          python3 -m venv dependemv
+          source dependemv/bin/activate
+          pip install -r __qmk__/requirements.txt
 
       - name: Compile and link
         run: qmk compile -j 4 -kb keyball/${{ inputs.keyboard }} -km ${{ inputs.keymap }}
