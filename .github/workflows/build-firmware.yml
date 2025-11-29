@@ -32,11 +32,14 @@ jobs:
       - name: Install a link to own source
         run: ln -s $(pwd)/qmk_firmware/keyboards/keyball __qmk__/keyboards/keyball
 
+      - name: Create venv
+        run: /usr/bin/python3python3 -m venv dependemv
+
+      - name: Add Dependency
+        run: source dependemv/bin/activate
+
       - name: Install missing python modules
-        run: |
-          python3 -m venv dependemv
-          source dependemv/bin/activate
-          pip install -r __qmk__/requirements.txt
+        run: /usr/bin/python3 pip install -r __qmk__/requirements.txt
 
       - name: Compile and link
         run: qmk compile -j 4 -kb keyball/${{ inputs.keyboard }} -km ${{ inputs.keymap }}
