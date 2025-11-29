@@ -35,14 +35,32 @@ enum layer_number
   /** Layer number for Sing keys */
   _SIGN,
   /** Layer number for Arrow and Mouse keys */
-  _ARROW_MOUSE
+  _ARROW_MOUSE,
+  /** Layer number for Mato */
+  _MATO,
+  /** Layer number for Mato-Shift */
+  _MATO_SHIFT,
+  /** Layer number for Mato-Shift */
+  _MATO_NUMBER,
+  /** Layer number for Mato-Shift */
+  _MATO_SING,
+  /** Layer number for Mato-Shift */
+  _MATO_ARROW_MOUSE,
 };
 
 /** Define custom keycodes */
 enum custom_keycodes
 {
-  /** Change language */
-  CTRL_LANG = KEYBALL_SAFE_RANGE
+  /** Change language to EN and layer to Qwerty */
+  MO_QWERTY = KEYBALL_SAFE_RANGE,
+  /** Change language to JP and layer to MATO */
+  MO_MATO,
+  /** CTRL and Change language */
+  CTRL_LANG,
+  /** CTRL and Change language to EN and layer to Qwerty */
+  CTL_QWERTY,
+  /** Send string "ん" */
+  SEND_NN,
 };
 
 /** Change language to English */
@@ -56,7 +74,19 @@ enum custom_keycodes
 /** Enter key and Change layer to number and function keys */
 #define NUM_ENT LT(_NUM, KC_ENT)
 /** Backspace key and Change layer to numpad and function keys */
-#define SFT_BS LT(_HALF_NUM, KC_BSPC)
+#define HNUM_BS LT(_HALF_NUM, KC_BSPC)
+/** Momentarily activates layer: Mato-Sing */
+#define MT_MO_SING MO(_MATO_SING)
+/** Space key and Change layer to Mato arrows and mouse keys */
+#define MT_SPC_ARW LT(_MATO_ARROW_MOUSE, KC_SPC)
+/** Enter key and Change layer to Mato number and function keys */
+#define MT_ENT_NUM LT(_MATO_NUMBER, KC_ENT)
+/** Momentarily activates layer: Mato-Shift */
+#define MT_MO_SFT MO(_MATO_SHIFT)
+/** Mod shift and space */
+#define MT_SPC_SFT MT(MOD_LSFT, KC_SPC)
+/** Mod shift and Enter */
+#define MT_ENT_SFT MT(MOD_LSFT, KC_ENT)
 /** Z key and Left shift */
 #define SFT_Z MT(MOD_LSFT, KC_Z)
 /** Tilde key: '~' */
@@ -117,8 +147,6 @@ enum custom_keycodes
 #define PREV_PG LSFT(LCTL(KC_TAB))
 /** Reverse tab: shift + tab */
 #define SFTED_TAB LSFT(KC_TAB)
-/** Change layer to qwerty keys */
-#define TO_QWER TO(_QWERTY)
 
 /*************************************************************
  * Settings for keymaps, keycodes and layer states.
@@ -131,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC    , KC_Q      , KC_W      , KC_E      , KC_R      , KC_T      ,      KC_Y      , KC_U      , KC_I      , KC_O      , KC_P      , KC_DEL    ,
     KC_TAB    , KC_A      , KC_S      , KC_D      , KC_F      , KC_G      ,      KC_H      , KC_J      , KC_K      , KC_L      , KC_SCLN   , KC_BSLS   ,
     KC_LSFT   , SFT_Z     , KC_X      , KC_C      , KC_V      , KC_B      ,      KC_N      , KC_M      , KC_COMM   , KC_DOT    , KC_QUOT   , KC_SLSH   ,
-                KC_LALT   , KC_LGUI   , CTL_LNG_EN, SIGN_SPC  , MOUSE_MINS,      SFT_BS    , NUM_ENT                           , KC_CAPS
+                KC_LALT   , KC_LGUI   , CTL_LNG_EN, SIGN_SPC  , MOUSE_MINS,      HNUM_BS   , NUM_ENT                           , KC_CAPS
   ),
   // Number and Function keys
   [_NUM] = LAYOUT_right_ball(
@@ -145,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______   , KC_P1     , KC_P2     , KC_P3     , KC_P4     , KC_P5     ,      KC_P6     , KC_P7     , KC_P8     , KC_P9     , KC_P0     , _______   ,
     _______   , KC_F1     , KC_F2     , KC_F3     , KC_F4     , KC_F5     ,      COLON     , KC_P4     , KC_P5     , KC_P6     , KC_COMM   , XXXXXXX   ,
     _______   , KC_F6     , KC_F7     , KC_F8     , KC_F9     , KC_F10    ,      KC_P0     , KC_P1     , KC_P2     , KC_P3     , KC_DOT    , XXXXXXX   ,
-                _______   , _______   , CTL_LNG_JP, _______   , _______   ,      _______   , _______                           , XXXXXXX
+                _______   , _______   , CTRL_MATO , _______   , _______   ,      _______   , _______                           , XXXXXXX
   ),
   // Sing keys
   [_SIGN] = LAYOUT_right_ball(
@@ -159,7 +187,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______   , KC_WH_U   , KC_HOME   , KC_UP     , KC_END    , KC_PGUP   ,      UNDO      , CUT       , COPY      , PASTE     , KC_INS    , SCRL_TO   ,
     XXXXXXX   , KC_WH_D   , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_PGDN   ,      SCRL_DVI  , KC_BTN1   , KC_WH_U   , KC_BTN2   , KC_BTN3   , CNG_WIN   ,
     KC_LALT   , KC_LGUI   , SFTED_TAB , KC_TAB    , PREV_PG   , NEXT_PG   ,      SCRL_DVD  , KC_WH_L   , KC_WH_D   , KC_WH_R   , KC_BTN4   , KC_BTN5   ,
-                _______   , _______   , _______   , _______   , _______   ,      KC_LSFT   , KC_LCTL                           , TO_QWER
+                _______   , _______   , _______   , _______   , _______   ,      KC_LSFT   , KC_LCTL                           , MO_QWERTY
+  ),
+  // Mato
+  [_MATO] = LAYOUT_right_ball(
+    XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   ,      XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   , XXXXXXX   ,
+    XXXXXXX   , KC_L      , KC_W      , KC_K      , KC_R      , KC_P      ,      KC_TAB    , KC_U      , KC_O      , KC_Y      , KC_MINS   , XXXXXXX   ,
+    XXXXXXX   , KC_H      , KC_S      , KC_T      , KC_N      , KC_M      ,      KC_BSPC   , KC_A      , KC_E      , KC_I      , KC_COMM   , XXXXXXX   ,
+                KC_LALT   , KC_LGUI   , CTL_QWERTY, MT_MO_SING, MT_SPC_ARW,      MT_ENT_NUM, MT_MO_SFT                         , KC_CAPS
+  ),
+  // Mato-Shift
+  [_MATO_SHIFT] = LAYOUT_right_ball(
+    _______   , _______   , _______   , _______   , _______   , _______   ,      _______   , _______   , _______   , _______   , _______   , _______   ,
+    _______   , KC_X      , KC_V      , KC_G      , KC_F      , KC_Q      ,      KC_ESC    , KC_U      , KC_O      , SEND_NN   , KC_EQL    , _______   ,
+    _______   , KC_B      , KC_Z      , KC_D      , KC_C      , KC_J      ,      KC_DEL    , KC_A      , KC_E      , KC_I      , KC_DOT    , _______   ,
+                _______   , _______   , KC_LCTL   , KC_LSFT   , MT_SPC_SFT,      XXXXXXX   , _______                           , _______
+  ),
+  // Mato-Number-Function
+  [_MATO_NUMBER] = LAYOUT_right_ball(
+    _______   , KC_1      , KC_2      , KC_3      , KC_4      , KC_5      ,      KC_6      , KC_7      , KC_8      , KC_9      , KC_0      , _______   ,
+    _______   , KC_F1     , KC_F2     , KC_F3     , KC_F4     , KC_F5     ,      COLON     , KC_4      , KC_5      , KC_6      , KC_COMM   , _______   ,
+    _______   , KC_F6     , KC_F7     , KC_F8     , KC_F9     , KC_F10    ,      KC_0      , KC_1      , KC_2      , KC_3      , KC_DOT    , _______   ,
+                _______   , _______   , KC_LCTL   , XXXXXXX   , XXXXXXX   ,      _______   , XXXXXXX                           , _______
+  ),
+  // Mato-Sing
+  [_MATO_SING] = LAYOUT_right_ball(
+    KC_GRV    , EXCLAM    , AT        , HASH      , DOLLAR    , PERCENT   ,      HAT       , AND       , STAR      , LPAREN    , RPAREN    , _______   ,
+    TILDE     , KC_COMM   , KC_DOT    , KC_MINS   , KC_EQL    , KC_SLSH   ,      KC_BSLS   , KC_QUOT   , KC_SCLN   , KC_LBRC   , KC_RBRC   , _______   ,
+    _______   , LANGBRC   , RANGBRC   , UNDRSCR   , PLUS      , QUEST     ,      PIPE      , DQUOT     , COLON     , LCRLYBRC  , RCRLYBRC  , _______   ,
+                _______   , _______   , KC_LCTL   , _______   , XXXXXXX   ,      MT_ENT_SFT, KC_LSFT                           , KC_PSCR
+  ),
+  // Mato-Arrow-Mouse
+  [_MATO_ARROW_MOUSE] = LAYOUT_right_ball(
+    _______   , KC_WH_U   , KC_HOME   , KC_UP     , KC_END    , KC_PGUP   ,      UNDO      , CUT       , COPY      , PASTE     , KC_INS    , SCRL_TO   ,
+    _______   , KC_WH_D   , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_PGDN   ,      SCRL_DVI  , KC_BTN1   , KC_WH_U   , KC_BTN2   , KC_BTN3   , CNG_WIN   ,
+    KC_LALT   , KC_LGUI   , SFTED_TAB , KC_TAB    , PREV_PG   , NEXT_PG   ,      SCRL_DVD  , KC_WH_L   , KC_WH_D   , KC_WH_R   , KC_BTN4   , KC_BTN5   ,
+                _______   , _______   , KC_LCTL   , XXXXXXX   , _______   ,      KC_LSFT   , KC_LCTL                           , MO_MATO
   ),
 };
 // clang-format on
@@ -174,6 +237,8 @@ enum key_state
 
 /** Key state for Ctrl/Lang keycode */
 enum key_state ctrl_lang_state = _RELEASED;
+/** Key state for Ctrl/Qwerty keycode */
+enum key_state ctrl_qwerty_state = _RELEASED;
 
 /**
  * Set behavior for custom keycodes.
@@ -189,7 +254,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode)
   {
-    // For Ctrl/Lang
+  case MO_QWERTY:
+    if (record->event.pressed)
+    {
+      tap_code(KC_LNG2);
+      layer_move(_QWERTY);
+    }
+    break;
+  case MO_MATO:
+    if (record->event.pressed)
+    {
+      tap_code(KC_LNG1);
+      layer_move(_MATO);
+    }
+    break;
   case CTRL_LANG:
     if (record->event.pressed)
     {
@@ -213,12 +291,47 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       ctrl_lang_state = _RELEASED;
     }
     break;
+  case CTL_QWERTY:
+    if (record->event.pressed)
+    {
+      ctrl_qwerty_state = _PRESSED;
+    }
+    else
+    {
+      switch (ctrl_qwerty_state)
+      {
+      case _PRESSED:
+        tap_code(KC_LNG2);
+        layer_move(_QWERTY);
+        break;
+      case _HOLDEN:
+        unregister_code(KC_LCTL);
+        break;
+      case _RELEASED:
+        break;
+      }
+      ctrl_qwerty_state = _RELEASED;
+    }
+    break;
+  case SEND_NN:
+    if (record->event.pressed)
+    {
+      tap_code(KC_N);
+      tap_code(KC_N);
+    }
+    break;
   default:
     // For Ctrl/Lang
     if (ctrl_lang_state == _PRESSED)
     {
       register_code(KC_LCTL);
       ctrl_lang_state = _HOLDEN;
+    }
+    // For Ctrl/Qwerty
+    if (ctrl_qwerty_state == _PRESSED)
+    {
+      register_code(KC_LCTL);
+      ctrl_qwerty_state = _HOLDEN;
     }
     break;
   }
@@ -265,6 +378,8 @@ typedef const uint16_t comb_keys_t[];
 
 /** Change layer to arrow and mouse keys */
 static PROGMEM comb_keys_t comb_keys_TO_MOUSE = {KC_J, KC_L, COMBO_END};
+/** Change layer to Mato arrow and mouse keys */
+static PROGMEM comb_keys_t comb_keys_mato_TO_MOUSE = {KC_U, KC_Y, COMBO_END};
 /** Function 11 key */
 static PROGMEM comb_keys_t comb_keys_F11 = {KC_F10, KC_F1, COMBO_END};
 /** Function 12 key */
@@ -287,6 +402,7 @@ static PROGMEM comb_keys_t comb_keys_F19 = {KC_F10, KC_F9, COMBO_END};
 /** Set behavior for combos */
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(comb_keys_TO_MOUSE, TO(_ARROW_MOUSE)),
+    COMBO(comb_keys_mato_TO_MOUSE, TO(_MATO_ARROW_MOUSE)),
     COMBO(comb_keys_F11, KC_F11),
     COMBO(comb_keys_F12, KC_F12),
     COMBO(comb_keys_F13, KC_F13),
