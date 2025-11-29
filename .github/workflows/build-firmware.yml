@@ -32,9 +32,6 @@ jobs:
       - name: Install a link to own source
         run: ln -s $(pwd)/qmk_firmware/keyboards/keyball __qmk__/keyboards/keyball
 
-      - name: Install pipx
-        run: apt-get install pipx
-
       - name: Install missing python modules
         run: pipx install -r __qmk__/requirements.txt
 
